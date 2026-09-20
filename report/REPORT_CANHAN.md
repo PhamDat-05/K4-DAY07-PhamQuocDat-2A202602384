@@ -1,8 +1,8 @@
 # Báo Cáo Cá Nhân — Lab 7: Embedding & Vector Store
 
-**Họ tên:** [Tên sinh viên]
-**Nhóm:** [Tên nhóm]
-**Ngày:** [Ngày nộp]
+**Họ tên:** Phạm Quốc Đạt
+**Nhóm:** Nova
+**Ngày:** 20/09/2026
 
 > **Nộp 1 bản / sinh viên.** Phần nhóm (lựa chọn tài liệu, thiết kế chiến lược, bộ câu hỏi đánh giá, demo) nộp chung 1 bản trong `REPORT_NHOM.md`. Chi tiết thang điểm: `docs/SCORING.md`.
 
@@ -50,23 +50,23 @@ Giải thích cách tiếp cận của bạn khi lập trình (implement) các p
 ### Các hàm chia nhỏ (Chunking Functions)
 
 **`SentenceChunker.chunk`** — hướng tiếp cận:
-> *Viết 2-3 câu: dùng biểu thức chính quy (regex) gì để phát hiện câu? Xử lý trường hợp ngoại lệ (edge case) nào?*
+> Tôi dùng regex `(?<=[.!?])(?: |\n)+` để tách văn bản tại khoảng trắng hoặc xuống dòng đứng sau các dấu kết thúc câu `.`, `!`, `?`. Mỗi câu được `strip()` để loại bỏ khoảng trắng thừa, bỏ qua câu rỗng, sau đó gom tối đa `max_sentences_per_chunk` câu vào một chunk và nối chúng bằng một khoảng trắng. Với văn bản rỗng, hàm trả về danh sách rỗng; nếu tham số số câu nhỏ hơn 1 thì được chuẩn hóa thành 1 để tránh tạo chunk không hợp lệ.
 
 **`RecursiveChunker.chunk` / `_split`** — hướng tiếp cận:
-> *Viết 2-3 câu: thuật toán hoạt động thế nào? Base case (trường hợp cơ sở) là gì?*
+> Thuật toán ưu tiên lần lượt các dấu phân cách `\n\n`, `\n`, `. `, dấu cách và cuối cùng là chuỗi rỗng; văn bản được tách theo dấu phân cách hiện tại rồi đệ quy xử lý các phần nhỏ hơn với các dấu phân cách còn lại. Base case là khi phần văn bản không vượt quá `chunk_size`, khi đó trả về ngay một chunk sau khi loại bỏ khoảng trắng đầu/cuối; nếu không còn dấu phân cách, hàm cắt trực tiếp theo kích thước cố định. Sau khi tách, các mảnh liên tiếp vẫn được ghép lại nếu tổng độ dài (kể cả dấu phân cách) không vượt quá `chunk_size`, nhờ đó hạn chế tạo ra các chunk quá ngắn.
 
 ### Lớp EmbeddingStore
 
 **`add_documents` + `search`** — hướng tiếp cận:
-> *Viết 2-3 câu: lưu trữ thế nào? Tính độ tương tự ra sao?*
+> Tôi lưu mỗi `Document` thành một record trong danh sách trong bộ nhớ, gồm `id`, nội dung, bản sao metadata và embedding được tạo từ nội dung bằng hàm embedding đã truyền vào (mặc định là mock embedder). Khi tìm kiếm, hệ thống tạo embedding cho query, tính tích vô hướng giữa query embedding và embedding của từng record, sắp xếp điểm giảm dần và trả về tối đa `top_k` kết quả. Hàm `compute_similarity` riêng dùng cosine similarity cho bài toán đo độ tương tự, còn đường tìm kiếm hiện tại dùng dot product để xếp hạng.
 
 **`search_with_filter` + `delete_document`** — hướng tiếp cận:
-> *Viết 2-3 câu: lọc (filter) trước hay sau? Xóa bằng cách nào?*
+> `search_with_filter` lọc trước: chỉ giữ các record có toàn bộ cặp khóa-giá trị khớp với `metadata_filter`, rồi mới embedding query và xếp hạng các ứng viên còn lại; nếu không có bộ lọc thì tìm trên toàn bộ store. `delete_document` xóa tất cả chunk có metadata `doc_id` bằng `doc_id` được yêu cầu, trả về `True` nếu có record bị xóa và `False` nếu không tìm thấy tài liệu tương ứng. Vì một tài liệu có thể gồm nhiều chunk, cách xóa theo metadata giúp loại bỏ toàn bộ các chunk của tài liệu đó.
 
 ### Tác tử KnowledgeBaseAgent
 
 **`answer`** — hướng tiếp cận:
-> *Viết 2-3 câu: cấu trúc prompt? Cách đưa ngữ cảnh (inject context) vào thế nào?*
+> Agent trước hết kiểm tra store có dữ liệu, sau đó truy xuất tối đa `top_k` chunk bằng `search` hoặc `search_with_filter` nếu có metadata filter. Mỗi chunk được đưa vào context kèm số thứ tự và nguồn lấy từ `source_url`, `doc_id` hoặc `id`; prompt yêu cầu mô hình chỉ dùng context, không tự suy diễn và trích dẫn số context như `[1]` hoặc `[2]`. Cuối prompt, agent đặt câu hỏi và phần `Answer:` rồi truyền toàn bộ prompt cho `llm_fn`; nếu không có dữ liệu hoặc không có kết quả truy xuất thì trả về thông báo không tìm thấy thông tin.
 
 ---
 

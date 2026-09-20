@@ -1,5 +1,5 @@
 ============================================================
-LAB 7 BENCHMARK - CURRENT RUN
+LAB 7 BENCHMARK
 ============================================================
 Strategy: FixedSizeChunker
 Chunker: FixedSizeChunker(chunk_size=500, overlap=50)
@@ -9,45 +9,281 @@ Documents: 8
 Chunks: 41
 Top-K: 3
 Benchmark queries: 5
+============================================================
 
+============================================================
 Q1 — UNFILTERED
-Relevant evidence: No
+Query: Quyền và trách nhiệm của tôi đối với việc bảo hành sản phẩm trên sàn là gì?
+Filter: None
+Gold answer: Người Bán có trách nhiệm tiếp nhận bảo hành sản phẩm, dịch vụ cho Người Mua như cam kết trong Chính sách bảo hành sản phẩm của Người bán và/hoặc của nhà sản xuất và thông tin về Chính sách bảo hành này phải được được đăng tải trên Sàn Shopee trong phần mô tả về sản phẩm, dịch vụ.
+Gold source: seller-warranty-policy.md
+
+Top 1
+score: 0.2481
+doc_id: shopee-mall-terms
+audience: both
+content: thái Giao hàng thành công.
+
+### 1.9.2. Quy trình xử lý yêu cầu trả hàng hoàn tiền của Shopee Mall áp dụng cho Người Bán tại Shopee Mall
+
+Trong hầu hết các trường hợp, Shopee sẽ xử lý và đưa ra quyết định cuối cùng liên quan đến yêu cầu trả hàng hoàn tiền của Người Mua trong vòng 05 ngày kể từ thời điểm Shopee nhận được yêu cầu hoàn tiền hoặc nhận được Sản Phẩm Hoàn Trả về từ Người Mua. Trong quá trình xác minh, Shopee có quyền yêu cầu Người Bán tại Shopee Mall cung cấp các bằng chứng liên quan.
+
+Top 2
+score: 0.2133
+doc_id: dispute-process
+audience: both
+content: khiếu nại của Shopee sẽ tiếp nhận các yêu cầu của người khiếu nại/các bên tranh chấp. Shopee sẽ có biện pháp cụ thể hỗ trợ người khiếu nại/các bên tranh chấp để giải quyết tùy theo tính chất và mức độ của vụ việc.
+
+### Bước 3
+
+Khiếu nại Trả Hàng/Hoàn Tiền được xử lý theo Chính Sách Trả Hàng Và Hoàn Tiền của Shopee. Đối với các tranh chấp không phải là khiếu nại Trả Hàng/Hoàn Tiền, Shopee yêu cầu các bên tranh chấp cung cấp đầy đủ thông tin/tài liệu liên quan đến vụ việc, và đưa ra hướng giải quy
+
+Top 3
+score: 0.1504
+doc_id: dispute-process
+audience: both
+content:  đưa vụ việc ra giải quyết tại cơ quan nhà nước có thẩm quyền theo quy định của pháp luật.
+
+Quy Trình này được cập nhật và đăng tải vào ngày 15/3/2024. Phiên bản này có hiệu lực sau 07 ngày kể từ ngày đăng tải.
+Relevant evidence found: No
+Gold-marker coverage: 0/3 across gold-source chunks in top-3
+Agent answer: not evaluated in this shared retrieval benchmark.
 Retrieval score: 0/2
 
+============================================================
 Q1 — FILTERED audience=seller
-Relevant evidence: Yes, first marker rank 3
-Gold-marker coverage: 3/3
+Query: Quyền và trách nhiệm của tôi đối với việc bảo hành sản phẩm trên sàn là gì?
+Filter: {'audience': 'seller'}
+Gold answer: Người Bán có trách nhiệm tiếp nhận bảo hành sản phẩm, dịch vụ cho Người Mua như cam kết trong Chính sách bảo hành sản phẩm của Người bán và/hoặc của nhà sản xuất và thông tin về Chính sách bảo hành này phải được được đăng tải trên Sàn Shopee trong phần mô tả về sản phẩm, dịch vụ.
+Gold source: seller-warranty-policy.md
+
+Top 1
+score: 0.1448
+doc_id: seller-listing-policy
+audience: seller
+content: đó.
+
+Tất cả chứng từ mà Người Bán được yêu cầu cung cấp thì Người Bán phải đảm bảo và cam kết tất cả các chứng từ mà Người Bán cung cấp cho Shopee đều được scan từ chứng từ gốc, không được làm giả, chỉnh sửa, tẩy xóa.
+
+## C. Hướng dẫn đăng bán sản phẩm trên Shopee
+
+### 4. Thông tin mô tả
+
+Mô tả sản phẩm cần đầy đủ và chi tiết, giúp người mua có thể hiểu rõ những đặc điểm, công dụng, cách dùng, lưu ý khi sử dụng của sản phẩm để làm căn cứ khi đặt mua hàng. Từ ngữ mô tả trung thực, rõ ràng, không
+
+Top 2
+score: 0.0697
+doc_id: seller-listing-policy
+audience: seller
+content: ## A. Phạm vi và đối tượng áp dụng
+
+### 1. Đối tượng áp dụng
+
+Quy định này áp dụng đối với tất cả Người Bán trên Sàn TMĐT Shopee (“Sàn Shopee”).
+
+### 2. Phạm vi áp dụng
+
+Quy định này quy định về việc đăng bán các sản phẩm trên Sàn Shopee.
+
+## B. Quy định chung
+
+### 1. Nguyên tắc chung
+
+Đăng bán sản phẩm trên Shopee là hoạt động của Người Bán dùng hàng hóa, dịch vụ và tài liệu về hàng hóa, dịch vụ để giới thiệu với khách hàng về hàng hóa, dịch vụ đó.
+
+Tất cả chứng từ mà Người Bán được yêu cầu cun
+
+Top 3
+score: 0.0483
+doc_id: seller-warranty-policy
+audience: seller
+content: ## 4. Chính sách bảo hành
+
+Người Bán có trách nhiệm tiếp nhận bảo hành sản phẩm, dịch vụ cho Người Mua như cam kết trong Chính sách bảo hành sản phẩm của Người bán và/hoặc của nhà sản xuất và thông tin về Chính sách bảo hành này phải được được đăng tải trên Sàn Shopee trong phần mô tả về sản phẩm, dịch vụ.
+
+Đối với Sản phẩm, dịch vụ do Shopee đăng bán trực tiếp, việc bảo hành sẽ được thực hiện theo chính sách bảo hành đối với từng sản phẩm, dịch vụ được công bố trong phần mô tả của sản phẩm, dịc
+Relevant evidence found: Yes, first marker rank 3
+Gold-marker coverage: 3/3 across gold-source chunks in top-3
+Agent answer: not evaluated in this shared retrieval benchmark.
 Retrieval score: 1/2
 Q1 metadata filter: improved (unfiltered rank=None, filtered rank=3)
 
+============================================================
 Q2
 Query: Đối với đơn hàng do Người bán tự vận chuyển, tôi có tối đa bao nhiêu ngày để gửi yêu cầu trả hàng kể từ lúc trạng thái cập nhật 'Lấy hàng thành công' mà tôi chưa bấm nhận hàng?
-Relevant evidence: No
-Gold-marker coverage: 0/2
+Filter: None
+Gold answer: 20 ngày kể từ lúc đơn hàng được cập nhật trạng thái “Lấy hàng thành công” và bạn không bấm “Đã nhận được hàng”.
+Gold source: return-refund-policy.md
+
+Top 1
+score: 0.3653
+doc_id: shopee-mall-terms
+audience: both
+content: ại Shopee Mall cung cấp các bằng chứng liên quan. Người Bán tại Shopee Mall có trách nhiệm cung cấp các bằng chứng liên quan trong vòng tối đa 24 giờ kể từ khi nhận được yêu cầu của Shopee.
+
+Đối với trường hợp hoàn tiền có đi kèm với trả hàng, trong trường hợp Shopee đồng ý với yêu cầu của Người Mua, Shopee sẽ gửi trả lại Sản Phẩm cho Người Bán tại Shopee Mall trong vòng 07 ngày làm việc kể từ ngày Shopee đưa ra quyết định cuối cùng. Người Bán tại Shopee Mall có nghĩa vụ nhận lại Sản Phẩm Hoàn T
+
+Top 2
+score: 0.1999
+doc_id: shopee-mall-terms
+audience: both
+content: Chính Sách Trả Hàng Hoàn Tiền của Shopee Mall.
+
+### 1.9. Thời hạn và điều kiện Người Mua tại Shopee Mall được phép yêu cầu trả hàng
+
+Người Bán tại Shopee Mall và Shopee cùng đồng ý rằng Người Mua tại Shopee Mall có quyền gửi khiếu nại hoặc yêu cầu trả hàng hoàn tiền trong vòng 24 giờ đồng hồ đối với Sản Phẩm là thực phẩm tươi sống và đông lạnh, và 15 ngày lịch đối với các sản phẩm còn lại kể từ ngày đơn hàng mua ở Shopee Mall được cập nhật trạng thái Giao hàng thành công.
+
+### 1.9.2. Quy trình x
+
+Top 3
+score: 0.1585
+doc_id: return-refund-policy
+audience: buyer
+content: gửi yêu cầu Trả hàng/Hoàn tiền sau khi đã bấm nút “Đã nhận được hàng” và vẫn còn trong thời hạn 15 ngày Trả hàng/Hoàn tiền quy định của Shopee.
+
+Yêu cầu Trả hàng/Hoàn tiền của bạn sẽ được phản hồi trong vòng 3-5 ngày làm việc. Hãy theo dõi mục thông báo trên ứng dụng Shopee để nhanh chóng cập nhật tiến trình xử lý khiếu nại Trả hàng/Hoàn tiền.
+
+### 1.3. Lý do Trả hàng/Hoàn tiền
+
+Bạn có thể yêu cầu Trả hàng/Hoàn tiền trong các trường hợp sau:
+
+- Chưa nhận được hàng: Chưa nhận được gói hàng nhưng
+Relevant evidence found: No
+Gold-marker coverage: 0/2 across gold-source chunks in top-3
+Agent answer: not evaluated in this shared retrieval benchmark.
 Retrieval score: 0/2
 
+============================================================
 Q3
 Query: Sản phẩm của tôi cần đáp ứng các điều kiện cơ bản nào để được bảo hành?
-Relevant evidence: No
-Gold-marker coverage: 0/3
+Filter: None
+Gold answer: Còn thời hạn bảo hành (dựa trên tem/phiếu bảo hành/hoặc thời điểm kích hoạt bảo hành điện tử); còn tem/phiếu bảo hành; sản phẩm bị lỗi kỹ thuật không phải do lỗi của Người Mua.
+Gold source: buyer-warranty-policy.md
+
+Top 1
+score: 0.2806
+doc_id: return-refund-policy
+audience: buyer
+content: hức năng như mô tả của Người bán.
+- Khác với mô tả: Sản phẩm có sự khác biệt rõ ràng về chất liệu, màu sắc, thông số, kiểu dáng so với mô tả của người bán.
+- Hàng đã qua sử dụng: Sản phẩm có dấu hiệu đã qua sử dụng (bị bẩn, đã bị cạy mở, không còn đủ dung tích,...).
+- Hàng giả/nhái: Sản phẩm có dấu hiệu làm giả/nhái sản phẩm thương hiệu nổi tiếng/đã được bảo hộ.
+
+Đổi ý (Sản phẩm còn nguyên tem, nhãn mác, bao bì): Chỉ áp dụng khi sản phẩm trả còn nguyên trạng ban đầu: chưa bóc tem/khui hộp/sử dụn
+
+Top 2
+score: 0.2332
+doc_id: seller-warranty-policy
+audience: seller
+content: vụ được công bố trong phần mô tả của sản phẩm, dịch vụ tương ứng.
+
+## 3. Quyền và trách nhiệm của Người bán trên website/ứng dụng Shopee
+
+Ngoài các quyền và nghĩa vụ chung của Thành viên trên website/ứng dụng Shopee, Người bán còn có các quyền và nghĩa vụ như sau:
+
+- Cung cấp đầy đủ thông tin về hàng hóa, dịch vụ theo quy định từ Điều 30 đến Điều 34 Nghị định 52 khi bán hàng hóa hoặc cung ứng dịch vụ trên sàn giao dịch thương mại điện tử.
+- Đảm bảo tính chính xác, trung thực của thông tin về hàn
+
+Top 3
+score: 0.1943
+doc_id: return-refund-process
+audience: buyer
+content: ## 1. Nguyên tắc chung
+
+Tùy từng trường hợp cụ thể, yêu cầu Trả hàng/Hoàn tiền của bạn sẽ được Shopee chấp nhận cho Trả hàng ngay sau khi gửi yêu cầu hoặc được chuyển trạng thái Shopee đang xem xét.
+
+Đối với các yêu cầu Trả hàng/Hoàn tiền hiển thị trạng thái Shopee đang xem xét: Đây là quá trình Shopee đang tiến hành rà soát yêu cầu của bạn và sẽ gửi kết quả xử lý tới bạn trong vòng 3-5 ngày làm việc (không tính chủ nhật và các ngày lễ, Tết) qua mục Thông báo > Cập nhật đơn hàng, hoặc qua email
+Relevant evidence found: No
+Gold-marker coverage: 0/3 across gold-source chunks in top-3
+Agent answer: not evaluated in this shared retrieval benchmark.
 Retrieval score: 0/2
 
+============================================================
 Q4
 Query: Đối với khiếu nại không phải là Trả Hàng/Hoàn Tiền, Shopee xử lý vụ việc trong thời hạn bao lâu kể từ khi nhận đủ thông tin từ các bên?
-Relevant evidence: No
-Gold-marker coverage: 0/2
+Filter: None
+Gold answer: Shopee yêu cầu các bên tranh chấp cung cấp đầy đủ thông tin/tài liệu liên quan đến vụ việc, và đưa ra hướng giải quyết trong vòng 07 ngày làm việc kể từ ngày nhận được đầy đủ các thông tin/tài liệu có liên quan; vụ việc phức tạp có thể kéo dài hơn.
+Gold source: dispute-process.md
+
+Top 1
+score: 0.2119
+doc_id: shopee-mall-terms
+audience: both
+content:  hành động cần thiết để hoàn tất yêu cầu trả hàng và/hoặc hoàn tiền của Người Mua tại Shopee Mall đã được Shopee chấp thuận.
+
+Top 2
+score: 0.2038
+doc_id: seller-listing-policy
+audience: seller
+content: đó.
+
+Tất cả chứng từ mà Người Bán được yêu cầu cung cấp thì Người Bán phải đảm bảo và cam kết tất cả các chứng từ mà Người Bán cung cấp cho Shopee đều được scan từ chứng từ gốc, không được làm giả, chỉnh sửa, tẩy xóa.
+
+## C. Hướng dẫn đăng bán sản phẩm trên Shopee
+
+### 4. Thông tin mô tả
+
+Mô tả sản phẩm cần đầy đủ và chi tiết, giúp người mua có thể hiểu rõ những đặc điểm, công dụng, cách dùng, lưu ý khi sử dụng của sản phẩm để làm căn cứ khi đặt mua hàng. Từ ngữ mô tả trung thực, rõ ràng, không
+
+Top 3
+score: 0.1706
+doc_id: return-refund-policy
+audience: buyer
+content: gửi yêu cầu Trả hàng/Hoàn tiền sau khi đã bấm nút “Đã nhận được hàng” và vẫn còn trong thời hạn 15 ngày Trả hàng/Hoàn tiền quy định của Shopee.
+
+Yêu cầu Trả hàng/Hoàn tiền của bạn sẽ được phản hồi trong vòng 3-5 ngày làm việc. Hãy theo dõi mục thông báo trên ứng dụng Shopee để nhanh chóng cập nhật tiến trình xử lý khiếu nại Trả hàng/Hoàn tiền.
+
+### 1.3. Lý do Trả hàng/Hoàn tiền
+
+Bạn có thể yêu cầu Trả hàng/Hoàn tiền trong các trường hợp sau:
+
+- Chưa nhận được hàng: Chưa nhận được gói hàng nhưng
+Relevant evidence found: No
+Gold-marker coverage: 0/2 across gold-source chunks in top-3
+Agent answer: not evaluated in this shared retrieval benchmark.
 Retrieval score: 0/2
 
+============================================================
 Q5
 Query: Hãy liệt kê tất cả các lý do mà tôi có thể dùng để gửi yêu cầu Trả hàng/Hoàn tiền trên Shopee.
-Relevant evidence: No
-Gold-marker coverage: 0/8
+Filter: None
+Gold answer: Chưa nhận được hàng; thiếu hàng; Người bán gửi sai hàng; hàng lỗi, không hoạt động; khác với mô tả; hàng đã qua sử dụng; hàng giả/nhái; đổi ý (sản phẩm còn nguyên tem, nhãn mác, bao bì).
+Gold source: return-refund-policy.md
+
+Top 1
+score: 0.3569
+doc_id: shopee-mall-terms
+audience: both
+content: ồm việc bảo hành cho bất kỳ và toàn bộ Sản Phẩm, và không phải là Sản Phẩm bị lỗi. Người Bán sẽ chịu trách nhiệm về bất kỳ sự không tuân thủ hoặc khiếm khuyết hoặc bất kỳ yêu cầu thu hồi nào liên quan đến Sản Phẩm tại Shopee Mall.
+
+Quyết định của Shopee đối với việc trả hàng và hoàn tiền đối với Sản Phẩm tại Shopee Mall sẽ ràng buộc đối với Người Bán tại Shopee Mall có liên quan. Người Bán tại Shopee Mall đồng ý tuân thủ và thực hiện tất cả những hành động cần thiết để hoàn tất yêu cầu trả hàng
+
+Top 2
+score: 0.2706
+doc_id: return-refund-process
+audience: buyer
+content: ẹn nhưng không còn nhu cầu” sẽ được áp dụng như sau: Chỉ áp dụng cho nhóm Người mua có hạng thành viên Kim Cương, Vàng và người dùng đăng ký thành công gói ShopeeVIP. Áp dụng trên tất cả Người bán, bao gồm Người bán thuộc hoặc không thuộc Shopee Mall (ngoại trừ các sản phẩm mua tại Shopee Mart).
+
+Top 3
+score: 0.1878
+doc_id: shopee-guarantee
+audience: buyer
+content: ao đúng hạn: Người mua có thể yêu cầu Trả hàng/Hoàn tiền với lý do “Chưa nhận được hàng”. Shopee sẽ phản hồi kết quả trong 3-5 ngày làm việc.
+
+### Trường hợp hàng khác mô tả hoặc hư hỏng
+
+Trong trường hợp Người mua nhận được sản phẩm khác với mô tả hoặc bị hư hỏng, Người mua có thể yêu cầu Trả hàng/Hoàn tiền trong vòng 15 ngày kể từ lúc đơn hàng được cập nhật trạng thái “Giao hàng thành công”.
+
+Bạn vẫn có thể yêu cầu Trả hàng/Hoàn tiền sau khi nhấn “Đã nhận được hàng” nếu đơn hàng của bạn vẫn nằ
+Relevant evidence found: No
+Gold-marker coverage: 0/8 across gold-source chunks in top-3
+Agent answer: not evaluated in this shared retrieval benchmark.
 Retrieval score: 0/2
 
 ============================================================
 SUMMARY
-============================================================
 Strategy: FixedSizeChunker
+Chunker parameters: FixedSizeChunker(chunk_size=500, overlap=50)
 Embedding model: mock embeddings fallback
 Documents: 8
 Chunks: 41
