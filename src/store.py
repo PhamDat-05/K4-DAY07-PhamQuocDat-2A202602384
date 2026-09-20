@@ -9,9 +9,8 @@ from .models import Document
 
 class EmbeddingStore:
     """
-    A vector store for text chunks.
+    An in-memory vector store for text chunks.
 
-    Tries to use ChromaDB if available; falls back to an in-memory store.
     The embedding_fn parameter allows injection of mock embeddings for tests.
     """
 
@@ -24,17 +23,10 @@ class EmbeddingStore:
         self._collection_name = collection_name
         self._use_chroma = False
         self._store: list[dict[str, Any]] = []
-        self._collection = None
-        self._next_index = 0
-
-        try:
-            import chromadb  # noqa: F401
-        except Exception:
-            pass
 
     def _make_record(self, doc: Document) -> dict[str, Any]:
-        metadata = dict(doc.metadata)
-        metadata.setdefault("doc_id", doc.id)
+        metadata = doc.metadata.copy()
+        metadata.setdefault("doc_id", doc.id.split("#", 1)[0])
         return {
             "id": doc.id,
             "content": doc.content,
@@ -42,12 +34,16 @@ class EmbeddingStore:
             "embedding": self._embedding_fn(doc.content),
         }
 
-    def _search_records(self, query: str, records: list[dict[str, Any]], top_k: int) -> list[dict[str, Any]]:
+    def _search_records(
+        self,
+        query_embedding: list[float],
+        candidates: list[dict[str, Any]],
+        top_k: int,
+    ) -> list[dict[str, Any]]:
         if top_k <= 0:
             return []
-        query_embedding = self._embedding_fn(query)
         ranked = sorted(
-            ((record, _dot(query_embedding, record["embedding"])) for record in records),
+            ((record, _dot(query_embedding, record["embedding"])) for record in candidates),
             key=lambda item: item[1],
             reverse=True,
         )[:top_k]
@@ -65,8 +61,7 @@ class EmbeddingStore:
         """
         Embed each document's content and store it.
 
-        For ChromaDB: use collection.add(ids=[...], documents=[...], embeddings=[...])
-        For in-memory: append dicts to self._store
+        Each input Document is stored as one record; chunking happens before this layer.
         """
         self._store.extend(self._make_record(doc) for doc in docs)
 
@@ -74,15 +69,20 @@ class EmbeddingStore:
         """
         Find the top_k most similar documents to query.
 
-        For in-memory: compute dot product of query embedding vs all stored embeddings.
+        Compute the query embedding, then rank all in-memory records.
         """
-        return self._search_records(query, self._store, top_k)
+        return self._search_records(self._embedding_fn(query), self._store, top_k)
 
     def get_collection_size(self) -> int:
         """Return the total number of stored chunks."""
         return len(self._store)
 
-    def search_with_filter(self, query: str, top_k: int = 3, metadata_filter: dict = None) -> list[dict]:
+    def search_with_filter(
+        self,
+        query: str,
+        metadata_filter: dict | None = None,
+        top_k: int = 5,
+    ) -> list[dict[str, Any]]:
         """
         Search with optional metadata pre-filtering.
 
@@ -96,7 +96,7 @@ class EmbeddingStore:
                 for record in self._store
                 if all(record["metadata"].get(key) == value for key, value in metadata_filter.items())
             ]
-        return self._search_records(query, candidates, top_k)
+        return self._search_records(self._embedding_fn(query), candidates, top_k)
 
     def delete_document(self, doc_id: str) -> bool:
         """
