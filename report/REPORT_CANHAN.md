@@ -88,14 +88,16 @@ Vượt qua bộ kiểm thử là điều kiện tính điểm phần này.
 
 | Cặp | Câu A | Câu B | Dự đoán | Điểm thực tế | Đúng? |
 |------|-----------|-----------|---------|--------------|-------|
-| 1 | | | cao / thấp | | |
-| 2 | | | cao / thấp | | |
-| 3 | | | cao / thấp | | |
-| 4 | | | cao / thấp | | |
-| 5 | | | cao / thấp | | |
+| 1 | Người mua có thể yêu cầu trả hàng nếu kiện hàng bị biến dạng lúc vận chuyển. | Khách hàng được quyền hoàn trả khi bưu phẩm gặp sự cố móp méo trong quá trình giao nhận. | Cao | -0.078313 | Không |
+| 2 | Sản phẩm còn thời hạn bảo hành và có tem bảo hành hợp lệ. | Thiết bị còn thời hạn bảo hành và vẫn giữ phiếu bảo hành. | Cao | 0.003204 | Không |
+| 3 | Shopee đưa ra hướng giải quyết tranh chấp trong vòng 07 ngày làm việc. | Vụ việc được xử lý trong thời hạn bảy ngày làm việc kể từ khi nhận đủ tài liệu. | Cao | 0.017354 | Không |
+| 4 | Người bán phải điền nguồn gốc và chế độ bảo hành của sản phẩm. | Hôm nay trời có mưa nhẹ ở khu vực miền Bắc. | Thấp | 0.090404 | Không |
+| 5 | Người mua có thể yêu cầu hoàn tiền khi hàng bị lỗi. | Chính sách voucher áp dụng giảm tối đa 50.000 đồng cho đơn từ 200.000 đồng. | Thấp | 0.074338 | Không |
+
+> Điểm được tính bằng `compute_similarity(MockEmbedder()(A), MockEmbedder()(B))`. Vì không có ngưỡng tuyệt đối để gọi một điểm là cao hay thấp, trong bảng này tôi quy ước hai điểm lớn nhất trong 5 cặp là “cao” và ba điểm còn lại là “thấp”; kết quả được làm tròn đến 6 chữ số thập phân. Theo quy ước đó, cặp 4 và 5 có điểm cao nhất, còn cặp 1, 2 và 3 có điểm thấp hơn.
 
 **Kết quả nào bất ngờ nhất? Điều này nói gì về cách embeddings biểu diễn ý nghĩa?**
-> *Viết 2-3 câu:*
+> Bất ngờ nhất là cặp 1 và cặp 3 đều là các câu gần nghĩa nhưng lần lượt chỉ đạt -0.078313 và 0.017354, trong khi cặp 4 gồm hai câu không liên quan lại đạt 0.090404, cao nhất trong năm cặp. Nguyên nhân là `MockEmbedder` chỉ băm MD5 để tạo vector giả ổn định, không học ngữ nghĩa; vì vậy điểm cosine trong thí nghiệm này không thể hiện mức độ tương đồng ngôn ngữ và không nên được dùng để kết luận về chất lượng embedding thực tế. Với một embedding model được huấn luyện cho văn bản tiếng Việt, dự đoán các cặp 1-3 có điểm cao sẽ hợp lý hơn.
 
 ---
 
@@ -121,7 +123,7 @@ Vượt qua bộ kiểm thử là điều kiện tính điểm phần này.
 | 4 | Thời hạn giải quyết tranh chấp ngoài Trả hàng/Hoàn tiền | `shopee-mall-terms` (0.2119); `seller-listing-policy` (0.2038); `return-refund-policy` (0.1706) | 0/2 | Không | Không truy xuất được marker “07 ngày làm việc”. |
 | 5 | Các lý do được phép Trả hàng/Hoàn tiền | `shopee-mall-terms` (0.3569); `return-refund-process` (0.2706); `shopee-guarantee` (0.1878) | 0/2 | Không | Không chứa đủ 8 marker của câu hỏi. |
 
-**Tổng điểm retrieval:** **0 / 10**.
+**Tổng điểm retrieval:** **1 / 10**.
 
 ### Đánh giá chiến lược FixedSizeChunker
 
