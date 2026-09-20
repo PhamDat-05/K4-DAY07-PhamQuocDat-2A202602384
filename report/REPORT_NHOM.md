@@ -119,13 +119,13 @@ Nhóm chạy `ChunkingStrategyComparator().compare()` trên ba tài liệu đạ
 
 | Thành viên | Chiến lược | Điểm truy xuất (/10) | Điểm mạnh dự kiến | Điểm yếu dự kiến |
 |---|---|---:|---|---|
-| Phạm Quốc Đạt | FixedSizeChunker | 0/10 | Tạo chunk kích thước đồng nhất tuyệt đối (500 chars), tốc độ xử lý nhanh nhất, kiểm soát chặt chẽ token context. | Cắt cơ học mù ngữ nghĩa và cấu trúc Markdown; không bảo toàn được biên giới điều khoản chính sách. Kết quả ngữ nghĩa bị MockEmbedder chi phối. |
+| Phạm Quốc Đạt | FixedSizeChunker | 1/10 | Tạo 41 chunk kích thước tối đa 500 ký tự với overlap 50, tốc độ xử lý nhanh và kiểm soát tốt context. Metadata filter giúp Q1 đưa đúng tài liệu seller vào top-3. | Cắt cơ học mù ngữ nghĩa và cấu trúc Markdown; Q2-Q5 vẫn bị MockEmbedder chi phối nên không truy xuất đúng gold chunk. |
 | Phạm Đình Duy | SentenceChunker | PENDING CP6 | Giữ ranh giới câu, context tự nhiên | Chunk có thể dài không đều |
 | Nguyễn Hữu Chương | RecursiveChunker | PENDING CP6 | Tôn trọng nhiều ranh giới tự nhiên | Có thể tạo nhiều chunk nhỏ |
 | Võ Trường An | HeadingAwarePolicyChunker | PENDING CP6 | Domain-aware, giữ cấu trúc heading/section | Phụ thuộc chất lượng heading; cần fallback cho section dài |
 
 **Chiến lược nào tốt nhất cho chủ đề này? Tại sao?**
-> Với kết quả CP6 của FixedSizeChunker, chiến lược này đạt 0/10 khi dùng MockEmbedder. Chưa thể chọn chiến lược tốt nhất cho toàn nhóm trước khi các thành viên còn lại hoàn tất benchmark bằng cùng corpus và cấu hình retrieval; tuy nhiên FixedSizeChunker là baseline có tốc độ và kích thước chunk ổn định nhưng yếu về bảo toàn ngữ cảnh.
+> Với kết quả CP6 của FixedSizeChunker, chiến lược này đạt 1/10 khi dùng MockEmbedder: Q1 đạt 1/2 nhờ metadata filter, còn Q2-Q5 không có đủ gold marker trong top-3. Chưa thể chọn chiến lược tốt nhất cho toàn nhóm trước khi các thành viên còn lại hoàn tất benchmark bằng cùng corpus và cấu hình retrieval; tuy nhiên FixedSizeChunker là baseline có tốc độ và kích thước chunk ổn định nhưng yếu về bảo toàn ngữ cảnh.
 
 ---
 
@@ -149,21 +149,21 @@ Nhóm chạy `ChunkingStrategyComparator().compare()` trên ba tài liệu đạ
 
 | # | Câu hỏi | Chiến lược tốt nhất cho câu này | Có chunk liên quan trong top-3? | Ghi chú |
 |---|---|---|---|---|
-| 1 | FixedSizeChunker | Không | 0/2; top-3 không có gold keyword “20 ngày” hoặc “Lấy hàng thành công”. |
+| 1 | FixedSizeChunker | Có | 1/2; filter `audience=seller` đưa `seller-warranty-policy` vào hạng 3 và có đủ gold marker. |
 | 2 | FixedSizeChunker | Không | 0/2; top-3 không chứa đủ “thời hạn bảo hành”, “tem/phiếu”, “lỗi kỹ thuật”. |
 | 3 | FixedSizeChunker | Không | 0/2; top-3 không truy xuất đúng tài liệu seller kèm “nguồn gốc”/“chế độ bảo hành”. |
 | 4 | FixedSizeChunker | Không | 0/2; top-3 không chứa “07 ngày” hoặc “ngày làm việc” trong ngữ cảnh giải quyết tranh chấp. |
 | 5 | FixedSizeChunker | Không | 0/2 theo gold doc/keyword; đã thực hiện A/B filtered và unfiltered. |
 
 **Lọc bằng metadata có giúp ích không? Ở câu hỏi nào?**
-> **CÓ, thể hiện rõ rệt nhất ở Query 5:** “Khi phát sinh nhu cầu bảo hành sản phẩm trên Shopee thì cần làm gì?”. Khi **không dùng filter**, Top-3 bị chiếm lĩnh hoàn toàn bởi tài liệu dành cho người mua/general (`shopee-terms-service-warranty-general` và `shopee-brand-warranty-coverage`). Khi **có filter `audience: seller`**, hệ thống loại bỏ 100% tài liệu người mua và chỉ trả về các tài liệu chính sách của người bán (`shopee-seller-dispute-and-penalty`, `shopee-prohibited-items-policy`). Điều này chứng minh metadata filter bảo đảm audience precision khi query không nêu rõ chủ thể, dù MockEmbedder vẫn khiến kết quả chưa đạt gold document/keyword.
+> **CÓ, thể hiện rõ rệt nhất ở Q1:** “Quyền và trách nhiệm của tôi đối với việc bảo hành sản phẩm trên sàn là gì?”. Khi **không dùng filter**, top-3 không có tài liệu gold và không tìm thấy bằng chứng. Khi **có filter `audience: seller`**, hệ thống đưa `seller-warranty-policy` vào hạng 3, khớp đủ 3 gold marker và nâng điểm lên 1/2. Điều này chứng minh metadata filter cải thiện audience precision, dù MockEmbedder vẫn chưa đưa tài liệu gold lên hạng đầu.
 
 ---
 
 ## 4. Thuyết trình (Demo) & Bài học nhóm — Nhóm (5 điểm)
 
 **Những phân tích (insights) hay nhất nhóm sẽ trình bày:**
-> FixedSizeChunker tạo 340 chunk có kích thước ổn định 500 ký tự với overlap 50, nhưng đạt 0/10 khi embedding bằng MD5 MockEmbedder vì vector không biểu diễn ngữ nghĩa. A/B testing cho thấy metadata filter ở Query 5 có tác dụng rõ rệt trong việc loại bỏ tài liệu sai audience, nhưng không thể tự sửa chất lượng semantic retrieval.
+> FixedSizeChunker tạo 41 chunk với kích thước tối đa 500 ký tự và overlap 50, đạt 1/10 khi embedding bằng MD5 MockEmbedder vì vector không biểu diễn ngữ nghĩa. A/B testing ở Q1 cho thấy metadata filter `audience=seller` đưa đúng tài liệu seller vào top-3 và cải thiện kết quả từ không có bằng chứng lên hạng 3, nhưng chưa đủ để đạt điểm tối đa.
 
 **Bài học rút ra khi so sánh trong nhóm:**
 > Chunking và embedding là hai yếu tố độc lập: chunk đều và nhanh không đồng nghĩa với truy xuất đúng nếu embedding không mã hóa được ngữ nghĩa. Ngoài ra, metadata filter có thể tăng độ chính xác theo đối tượng ngay cả khi similarity vẫn bị nhiễu.
