@@ -34,7 +34,7 @@
 
 **Tài liệu 10,000 ký tự, chunk_size=500, overlap=50. Bao nhiêu chunks?**
 > Áp dụng công thức:
-> $$\left\lceil\frac{\text{độ dài} - \text{overlap}}{\text{chunk\_size} - \text{overlap}}\right\rceil = \left\lceil\frac{10000 - 50}{500 - 50}\right\rceil = \left\lceil\frac{9950}{450}\right\rceil = 23\text{ chunks}$$
+> ceil((độ_dài - overlap) / (chunk_size - overlap)) = ceil((10000 - 50) / (500 - 50)) = ceil(9950 / 450) = 23 chunks
 >
 > Đã kiểm chứng trực tiếp bằng code `len(FixedSizeChunker(chunk_size=500, overlap=50).chunk('a'*10000))`, kết quả là **23 chunks**.
 
