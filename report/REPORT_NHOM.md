@@ -14,31 +14,44 @@
 
 ### Chủ đề (Domain) & Lý Do Chọn
 
-**Chủ đề:** [ví dụ: Customer support FAQ, Luật Việt Nam, công thức nấu ăn, ...]
+**Chủ đề:** Chính sách bảo hành, đổi trả và khiếu nại sàn Shopee (Lớp K4-L3B).
 
 **Tại sao nhóm chọn chủ đề này?**
-> *Viết 2-3 câu:*
+> Bộ dữ liệu này bao gồm các chính sách công khai về quyền lợi người mua, nghĩa vụ người bán và quy định xử lý khiếu nại, đổi trả, bảo hành trên sàn Shopee. Chúng ta chọn chủ đề này vì nó mang tính thực tiễn cao, có cấu trúc metadata rõ ràng và phù hợp để xây dựng hệ thống retrieval, lọc theo audience và đánh giá chất lượng truy xuất văn bản.
 
 ### Danh sách tài liệu (Data Inventory)
 
-| # | Tên tài liệu | Nguồn (Source URL) | Ngày lấy / Phiên bản | Số ký tự | Metadata đã gán |
-|---|--------------|------------|--------------------|----------|-----------------|
-| 1 | | | | | |
-| 2 | | | | | |
-| 3 | | | | | |
-| 4 | | | | | |
-| 5 | | | | | |
+| STT | Doc ID | Tiêu đề | Đối tượng | Nguồn URL | Phiên bản |
+|-----|--------|---------|-----------|-----------|-----------|
+| 1 | shopee-brand-warranty-coverage | Chinh sach bao hanh chinh hang Shopee Mall | buyer | https://help.shopee.vn/portal/4/article/190242 | not-stated |
+| 2 | shopee-prohibited-items-policy | Chinh sach hang hoa cam va han che | seller | https://help.shopee.vn/portal/4/article/77246 | not-stated |
+| 3 | shopee-return-refund-rights-buyer | Chinh sach tra hang va bao ve nguoi mua | buyer | https://help.shopee.vn/portal/4/article/77262 | not-stated |
+| 4 | shopee-seller-dispute-and-penalty | Quy dinh ve tranh chap va xu phat Shop | seller | https://help.shopee.vn/portal/4/article/77265 | not-stated |
+| 5 | shopee-seller-return-warranty-fulfillment | Nghia vu tiep nhan va xu ly bao hanh cua nguoi ban | seller | https://help.shopee.vn/portal/4/article/79314 | not-stated |
+| 6 | shopee-terms-service-warranty-general | Dieu khoan dich vu va quy dinh chung | buyer | https://help.shopee.vn/portal/4/article/77245 | not-stated |
+| 7 | shopee-warranty-electronic-service | Quy dinh bao hanh dien tu va sua chua | buyer | https://help.shopee.vn/portal/4/article/188931 | not-stated |
+
+**Tổng quan corpus (Corpus Summary):**
+- Chủ đề: Chính sách bảo hành và khiếu nại sàn Shopee (Lớp K4-L3B).
+- Tổng số tài liệu: 7 file Markdown (.md).
+- Phân bố audience: 4 buyer, 3 seller.
+- Trạng thái kiểm thử CP2: 7/7 file đạt chuẩn, khớp 1-1 với `sources.csv`.
 
 **Danh sách kiểm tra quản trị dữ liệu (Data governance checklist):**
-- [ ] Tập tài liệu (Corpus) chỉ chứa nguồn công khai/được phép dùng và không chứa dữ liệu cá nhân, thông tin đăng nhập hoặc tài liệu nội bộ.
-- [ ] Mỗi tài liệu có `source_url`, `retrieved_at`, `document_version` (hoặc ngày hiệu lực) trong metadata.
+- [x] Tập tài liệu (Corpus) chỉ chứa nguồn công khai/được phép dùng và không chứa dữ liệu cá nhân, thông tin đăng nhập hoặc tài liệu nội bộ.
+- [x] Mỗi tài liệu có `source_url`, `retrieved_at`, `document_version` (hoặc ngày hiệu lực) trong metadata.
+- [x] Mỗi `doc_id` đồng bộ với tên file `.md` và khớp với `sources.csv`.
 
 ### Cấu trúc Metadata (Metadata Schema)
 
 | Trường metadata | Kiểu | Ví dụ giá trị | Tại sao hữu ích cho truy xuất (retrieval)? |
 |----------------|------|---------------|-------------------------------|
-| | | | |
-| | | | |
+| `doc_id` | string | `shopee-return-refund-rights-buyer` | Mã định danh duy nhất, dùng để khóa tài liệu, kiểm tra tương ứng 1-1 với file `.md` và lọc dữ liệu chính xác. |
+| `title` | string | `Chinh sach tra hang va bao ve nguoi mua` | Tiêu đề chính thức giúp nhận diện nội dung chính và hỗ trợ truy vấn theo tên chính sách. |
+| `source_url` | string | `https://help.shopee.vn/portal/4/article/77262` | Link nguồn gốc giúp xác minh tính hợp lệ, truy nguồn và kiểm tra chất lượng dữ liệu thu thập. |
+| `retrieved_at` | string / ISO timestamp | `2026-09-20` | Thời điểm thu thập cho phép theo dõi phiên bản dữ liệu và kiểm soát tính cập nhật của corpus. |
+| `document_version` | string | `not-stated` | Biểu thị mức độ rõ ràng về phiên bản văn bản; ở đây được chuẩn hóa là `not-stated` do nguồn không công bố. |
+| `audience` | string | `buyer` hoặc `seller` | Trường quan trọng cho filtering metadata, cho phép tách corpus theo nhóm người dùng và cải thiện độ chính xác khi trả lời câu hỏi theo đối tượng. |
 
 ---
 
