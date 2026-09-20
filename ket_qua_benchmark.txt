@@ -1,0 +1,56 @@
+Tong so chunk da nap vao store: 340
+Embedding backend: mock embeddings fallback
+
+=== Query 1 ===
+Đối với đơn hàng do Người bán tự vận chuyển, nếu Người mua không bấm "Đã nhận được hàng", thời hạn tối đa để gửi yêu cầu Trả hàng/Hoàn tiền là bao lâu kể từ lúc đơn hàng được cập nhật "Lấy hàng thành công"?
+Filter: none
+1. score=0.389593 doc_id=shopee-prohibited-items-policy content=hàng từ bên trung gian). 3.2. Thực phẩm chức năng/thực phẩm bảo vệ sức khỏe - Người Bán khi đăng bán sản phẩm Thực phẩm chức năng/thực phẩm bảo vệ sức
+2. score=0.333618 doc_id=shopee-return-refund-rights-buyer content=Mall mà không được định rõ trong bản điều khoản này sẽ có ý nghĩa như những điều khoản tương ứng trong Điều Khoản Dịch Vụ và/hoặc Chính Sách Shopee hi
+3. score=0.270566 doc_id=shopee-prohibited-items-policy content=tôn giáo, khiêu dâm, bạo lực, đi ngược lại thuần phong mỹ tục, truyền thống và văn hóa Việt Nam, xâm phạm chủ quyền, toàn vẹn lãnh thổ, an ninh quốc g
+Q1 score: 0/2
+
+=== Query 2 ===
+Ba điều kiện bảo hành cơ bản mà Shopee khuyến cáo Người Mua cần đáp ứng là gì?
+Filter: none
+1. score=0.403214 doc_id=shopee-return-refund-rights-buyer content=Mua để yêu cầu hỗ trợ hủy đơn bất kể việc yêu này được thực hiện một cách trực tiếp hoặc gián tiếp, rõ ràng hoặc ngụ ý (để làm rõ, việc hỗ trợ hủy đơn
+2. score=0.372331 doc_id=shopee-brand-warranty-coverage content=pee Xử Lý: Bạn có thể theo dõi hành trình đơn hàng tại trang Chi tiết Trả hàng/ Hoàn tiền ngay trên ứng dụng Shopee theo hướng dẫn sau: Bước 1: Tại ứn
+3. score=0.346791 doc_id=shopee-brand-warranty-coverage content=u của bạn và sẽ gửi kết quả xử lý tới bạn trong vòng 3-5 ngày làm việc (không tính chủ nhật và các ngày lễ, Tết) qua mục Thông báo > Cập nhật đơn hàng
+Q2 score: 0/2
+
+=== Query 3 ===
+Khi đăng bán sản phẩm trên Shopee, Người Bán phải điền những thông tin nào liên quan đến nguồn gốc và bảo hành?
+Filter: none
+1. score=0.369469 doc_id=shopee-return-refund-rights-buyer content=D: chứng từ nhập khẩu của hàng hóa cụ thể trong đơn hàng để chứng minh là hàng chính hãng, hợp đồng đại lý với nhà sản xuất/nhà phân phối, và/hoặc hóa
+2. score=0.324879 doc_id=shopee-terms-service-warranty-general content=quyền sử dụng dịch vụ thì tất cả các chứng nhận, các quyền của thành viên được cấp sẽ mặc nhiên hết giá trị và bị chấm dứt. Sàn giao dịch TMĐT Shopee 
+3. score=0.300757 doc_id=shopee-terms-service-warranty-general content=tuệ theo quy trình, thủ tục công bố tại Quy chế hoạt động của sàn giao dịch thương mại điện tử. Quy trình, thủ tục phối hợp với chủ thể quyền sở hữu t
+Q3 score: 0/2
+
+=== Query 4 ===
+Với tranh chấp không phải khiếu nại Trả hàng/Hoàn tiền, Shopee đưa ra hướng giải quyết trong bao lâu sau khi nhận đủ thông tin/tài liệu?
+Filter: none
+1. score=0.287756 doc_id=shopee-terms-service-warranty-general content=tin khác cho Sàn giao dịch TMĐT Shopee trong quá trình giải quyết tranh chấp phát sinh giữa Người Mua và Người Bán diễn ra qua Sàn phù hợp với các quy
+2. score=0.273460 doc_id=shopee-terms-service-warranty-general content=ng chứng nhận danh tính. - Phần mềm, thiết bị, hướng dẫn và dịch vụ được sử dụng để đánh cắp dữ liệu riêng tư, cá nhân hoặc tổ chức đều bị cấm. - Bất 
+3. score=0.273247 doc_id=shopee-terms-service-warranty-general content=a lựa chọn). Khi có xác nhận về dịch vụ vận chuyển, Shopee điều phối thông tin đơn hàng sang đối tác vận chuyển để qua lấy hàng tại địa chỉ của Người 
+Q4 score: 0/2
+
+=== Query 5 ===
+Khi phát sinh nhu cầu bảo hành sản phẩm trên Shopee thì cần làm gì?
+Filter: {'audience': 'seller'}
+1. score=0.225078 doc_id=shopee-seller-dispute-and-penalty content=ại Điện Tử Shopee cần cung cấp đầy đủ, chính xác, trung thực và chi tiết các thông tin/tài liệu liên quan đến sản phẩm. Mọi hành vi lừa đảo, gian lận 
+2. score=0.220217 doc_id=shopee-prohibited-items-policy content=ản phẩm một cách bất hợp lý trước khi tham gia khuyến mãi để phóng đại tỷ lệ giảm giá. e. Giá sản phẩm không được thấp hoặc cao hơn một cách bất hợp l
+3. score=0.219446 doc_id=shopee-prohibited-items-policy content=ian lận đánh giá hoặc tạo đơn ảo để gian lận tăng số lượng đơn hàng và đánh giá. j. Đăng bán không đúng ngành hàng, sử dụng hình ảnh minh họa không đú
+Q5 Filtered score: 0/2
+
+=== Query 5 A/B comparison: unfiltered ===
+
+=== Query 5 ===
+Khi phát sinh nhu cầu bảo hành sản phẩm trên Shopee thì cần làm gì?
+Filter: none
+1. score=0.323763 doc_id=shopee-terms-service-warranty-general content=mại điện tử. c. Đảm bảo tính chính xác, trung thực của thông tin về hàng hóa, dịch vụ cung cấp trên sàn giao dịch thương mại điện tử. d. Thực hiện các
+2. score=0.317222 doc_id=shopee-terms-service-warranty-general content=dịch thực hiện trên sàn giao dịch thương mại điện tử có nhiều hơn 02 bên tham gia; iv. Lưu trữ thông tin về các giao dịch đặt hàng được thực hiện trên
+3. score=0.280015 doc_id=shopee-brand-warranty-coverage content=ạn. Đối với sản phẩm còn lại: Bạn vui lòng theo dõi hành trình vận chuyển thông qua website https://ghn.vn của đối tác vận chuyển Giao Hàng Nhanh theo
+Q5 Unfiltered score: 0/2
+
+=== CP6 Summary ===
+FixedSizeChunker retrieval score: 0/10
+Embedding backend status: mock embeddings fallback

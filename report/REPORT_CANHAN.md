@@ -99,19 +99,32 @@ Vượt qua bộ kiểm thử là điều kiện tính điểm phần này.
 
 ---
 
-## 5. Kết quả truy xuất của tôi (Competition Results) — Cá nhân (10 điểm)
+## 5. Kết quả Benchmark & Đánh giá — FixedSizeChunker (10 điểm)
 
-Chạy **5 câu hỏi đánh giá của nhóm** trên mã nguồn cá nhân của bạn trong gói `src`. **5 câu hỏi này phải trùng với các thành viên cùng nhóm** (xem `REPORT_NHOM.md`).
+### Tổng hợp thực nghiệm CP6
+
+- **Tổng số chunk nạp vào store:** 340 chunks.
+- **Embedding backend:** Mock embeddings fallback (MD5 hashing).
+- **Điểm retrieval:** **0/10**.
+- Điểm 0/10 là hệ quả tất yếu của việc dùng `MockEmbedder`: cơ chế băm MD5 tạo vector ổn định nhưng không mã hóa được ngữ nghĩa. Vì vậy điểm similarity giữa các câu và chunk mang tính ngẫu nhiên, gây nhiễu và không phản ánh độ liên quan thực tế của văn bản.
+
+### Chi tiết Top-3 theo 5 benchmark queries
 
 | # | Câu hỏi (Query) | Top-1 Chunk truy xuất được (tóm tắt) | Điểm Score | Có liên quan không? (Relevant) | Câu trả lời của Agent (tóm tắt) |
 |---|-------|--------------------------------|-------|-----------|------------------------|
-| 1 | | | | | |
-| 2 | | | | | |
-| 3 | | | | | |
-| 4 | | | | | |
-| 5 | | | | | |
+| 1 | Thời hạn Trả hàng/Hoàn tiền khi Người bán tự vận chuyển | `shopee-prohibited-items-policy` (0.3896); Top-2 `shopee-return-refund-rights-buyer` (0.3336); Top-3 `shopee-prohibited-items-policy` (0.2706) | 0/2 | Không | Không truy xuất được chunk chứa “20 ngày” hoặc “Lấy hàng thành công”. |
+| 2 | Ba điều kiện bảo hành cơ bản cho Người Mua | `shopee-return-refund-rights-buyer` (0.4032); Top-2/3 `shopee-brand-warranty-coverage` (0.3723 / 0.3468) | 0/2 | Không | Có tài liệu gần chủ đề nhưng không chứa đủ gold keywords. |
+| 3 | Thông tin nguồn gốc và bảo hành khi đăng bán | `shopee-return-refund-rights-buyer` (0.3695); Top-2/3 `shopee-terms-service-warranty-general` (0.3249 / 0.3008) | 0/2 | Không | Không đưa được tài liệu seller và từ khóa “nguồn gốc”/“chế độ bảo hành” vào top-3. |
+| 4 | Thời hạn giải quyết tranh chấp ngoài Trả hàng/Hoàn tiền | `shopee-terms-service-warranty-general` (0.2878); Top-2 (0.2735), Top-3 (0.2732) cùng doc | 0/2 | Không | Các chunk trả về không chứa mốc “07 ngày làm việc”. |
+| 5 (Filtered) | Việc cần làm khi phát sinh nhu cầu bảo hành | `shopee-seller-dispute-and-penalty` (0.2251); Top-2/3 `shopee-prohibited-items-policy` (0.2202 / 0.2194) | 0/2 | Không | Filter đúng audience seller nhưng chưa đưa được gold document và keyword vào top-3. |
+| 5 (Unfiltered) | Việc cần làm khi phát sinh nhu cầu bảo hành | `shopee-terms-service-warranty-general` (0.3238 / 0.3172); Top-3 `shopee-brand-warranty-coverage` (0.2800) | 0/2 | Không | Không filter, top-3 bị chi phối bởi các tài liệu buyer/general. |
 
-**Bao nhiêu câu hỏi trả về chunk có liên quan trong top-3?** __ / 5
+**Tổng điểm retrieval:** **0 / 10**.
+
+### Đánh giá chiến lược FixedSizeChunker
+
+- **Ưu điểm:** Tốc độ chunking đồng nhất, sản sinh 340 chunk đều đặn với kích thước 500 ký tự và overlap 50 ký tự; dễ kiểm soát chi phí và kích thước context.
+- **Hạn chế:** Cắt cứng cơ học nên một số câu, heading và bảng biểu chính sách bị đứt đoạn giữa hai chunk, làm mất liên kết ngữ nghĩa khi truy xuất.
 
 **Điều hay nhất tôi học được từ thành viên khác / nhóm khác (qua demo):**
 > *Viết 2-3 câu:*

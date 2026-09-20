@@ -119,13 +119,13 @@ Nhóm chạy `ChunkingStrategyComparator().compare()` trên ba tài liệu đạ
 
 | Thành viên | Chiến lược | Điểm truy xuất (/10) | Điểm mạnh dự kiến | Điểm yếu dự kiến |
 |---|---|---:|---|---|
-| Phạm Quốc Đạt | FixedSizeChunker | PENDING CP6 | Đơn giản, kích thước ổn định, baseline rõ ràng | Có thể cắt giữa câu/điều khoản |
+| Phạm Quốc Đạt | FixedSizeChunker | 0/10 | Tạo chunk kích thước đồng nhất tuyệt đối (500 chars), tốc độ xử lý nhanh nhất, kiểm soát chặt chẽ token context. | Cắt cơ học mù ngữ nghĩa và cấu trúc Markdown; không bảo toàn được biên giới điều khoản chính sách. Kết quả ngữ nghĩa bị MockEmbedder chi phối. |
 | Phạm Đình Duy | SentenceChunker | PENDING CP6 | Giữ ranh giới câu, context tự nhiên | Chunk có thể dài không đều |
 | Nguyễn Hữu Chương | RecursiveChunker | PENDING CP6 | Tôn trọng nhiều ranh giới tự nhiên | Có thể tạo nhiều chunk nhỏ |
 | Võ Trường An | HeadingAwarePolicyChunker | PENDING CP6 | Domain-aware, giữ cấu trúc heading/section | Phụ thuộc chất lượng heading; cần fallback cho section dài |
 
 **Chiến lược nào tốt nhất cho chủ đề này? Tại sao?**
-> **PENDING CP6.** Nhóm chỉ kết luận sau khi cả 4 thành viên chạy cùng 5 benchmark queries trên cùng corpus và cùng cấu hình retrieval. Không chọn “winner” trước khi có kết quả thực nghiệm.
+> Với kết quả CP6 của FixedSizeChunker, chiến lược này đạt 0/10 khi dùng MockEmbedder. Chưa thể chọn chiến lược tốt nhất cho toàn nhóm trước khi các thành viên còn lại hoàn tất benchmark bằng cùng corpus và cấu hình retrieval; tuy nhiên FixedSizeChunker là baseline có tốc độ và kích thước chunk ổn định nhưng yếu về bảo toàn ngữ cảnh.
 
 ---
 
@@ -149,24 +149,30 @@ Nhóm chạy `ChunkingStrategyComparator().compare()` trên ba tài liệu đạ
 
 | # | Câu hỏi | Chiến lược tốt nhất cho câu này | Có chunk liên quan trong top-3? | Ghi chú |
 |---|---|---|---|---|
-| 1 | PENDING CP5 | PENDING CP6 | PENDING CP6 | |
-| 2 | PENDING CP5 | PENDING CP6 | PENDING CP6 | |
-| 3 | PENDING CP5 | PENDING CP6 | PENDING CP6 | |
-| 4 | PENDING CP5 | PENDING CP6 | PENDING CP6 | |
-| 5 | PENDING CP5 | PENDING CP6 | PENDING CP6 | Metadata A/B required |
+| 1 | FixedSizeChunker | Không | 0/2; top-3 không có gold keyword “20 ngày” hoặc “Lấy hàng thành công”. |
+| 2 | FixedSizeChunker | Không | 0/2; top-3 không chứa đủ “thời hạn bảo hành”, “tem/phiếu”, “lỗi kỹ thuật”. |
+| 3 | FixedSizeChunker | Không | 0/2; top-3 không truy xuất đúng tài liệu seller kèm “nguồn gốc”/“chế độ bảo hành”. |
+| 4 | FixedSizeChunker | Không | 0/2; top-3 không chứa “07 ngày” hoặc “ngày làm việc” trong ngữ cảnh giải quyết tranh chấp. |
+| 5 | FixedSizeChunker | Không | 0/2 theo gold doc/keyword; đã thực hiện A/B filtered và unfiltered. |
 
 **Lọc bằng metadata có giúp ích không? Ở câu hỏi nào?**
-> **PENDING CP6.** Nhóm sẽ so sánh filtered vs unfiltered trên query metadata đã chốt ở CP5 và chỉ kết luận từ kết quả thực tế.
+> **CÓ, thể hiện rõ rệt nhất ở Query 5:** “Khi phát sinh nhu cầu bảo hành sản phẩm trên Shopee thì cần làm gì?”. Khi **không dùng filter**, Top-3 bị chiếm lĩnh hoàn toàn bởi tài liệu dành cho người mua/general (`shopee-terms-service-warranty-general` và `shopee-brand-warranty-coverage`). Khi **có filter `audience: seller`**, hệ thống loại bỏ 100% tài liệu người mua và chỉ trả về các tài liệu chính sách của người bán (`shopee-seller-dispute-and-penalty`, `shopee-prohibited-items-policy`). Điều này chứng minh metadata filter bảo đảm audience precision khi query không nêu rõ chủ thể, dù MockEmbedder vẫn khiến kết quả chưa đạt gold document/keyword.
 
 ---
 
 ## 4. Thuyết trình (Demo) & Bài học nhóm — Nhóm (5 điểm)
 
 **Những phân tích (insights) hay nhất nhóm sẽ trình bày:**
-> **PENDING CP6/CP7.** Sẽ chọn từ kết quả benchmark thực tế, metadata A/B và failure analysis.
+> FixedSizeChunker tạo 340 chunk có kích thước ổn định 500 ký tự với overlap 50, nhưng đạt 0/10 khi embedding bằng MD5 MockEmbedder vì vector không biểu diễn ngữ nghĩa. A/B testing cho thấy metadata filter ở Query 5 có tác dụng rõ rệt trong việc loại bỏ tài liệu sai audience, nhưng không thể tự sửa chất lượng semantic retrieval.
 
 **Bài học rút ra khi so sánh trong nhóm:**
-> **PENDING CP6/CP7.** Chỉ tổng kết sau khi 4 strategy chạy cùng benchmark.
+> Chunking và embedding là hai yếu tố độc lập: chunk đều và nhanh không đồng nghĩa với truy xuất đúng nếu embedding không mã hóa được ngữ nghĩa. Ngoài ra, metadata filter có thể tăng độ chính xác theo đối tượng ngay cả khi similarity vẫn bị nhiễu.
+
+### Phân tích lỗi (Failure Case) — FixedSizeChunker
+
+- **Câu hỏi bị lỗi:** Query 4 — “Với tranh chấp không phải khiếu nại Trả hàng/Hoàn tiền, Shopee đưa ra hướng giải quyết trong bao lâu sau khi nhận đủ thông tin/tài liệu?”.
+- **Nguyên nhân:** Việc cắt cố định 500 ký tự kết hợp với MockEmbedder làm văn bản bị chia nhỏ; điều khoản quy định thời hạn “07 ngày làm việc” bị tách khỏi tiêu đề mục xử lý tranh chấp. Hệ thống kéo về các chunk của tài liệu điều khoản chung, nhưng nội dung top-3 chủ yếu chỉ chứa định nghĩa tài khoản và thông tin chung, không có số ngày giải quyết.
+- **Giải pháp khắc phục:** Chuyển sang `HeadingAwarePolicyChunker` hoặc `RecursiveChunker`, đồng thời giữ lại heading cha trong chunk để bảo toàn trọn vẹn ngữ cảnh điều khoản và mốc thời gian.
 
 **Nếu làm lại, nhóm sẽ thay đổi gì trong chiến lược dữ liệu (data strategy)?**
 > **PENDING CP7.**
