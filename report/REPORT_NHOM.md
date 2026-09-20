@@ -188,3 +188,4 @@ Nhóm chạy `ChunkingStrategyComparator().compare()` trên ba tài liệu đạ
 | Chất lượng truy xuất (Retrieval Quality) | PENDING CP7 / 10 |
 | Thuyết trình (Demo) | PENDING CP7 / 5 |
 | **Tổng phần nhóm** | **PENDING CP7 / 40** |
+
